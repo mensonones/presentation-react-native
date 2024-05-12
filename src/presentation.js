@@ -288,10 +288,7 @@ export default class Presentation extends React.Component {
           Javascript Thread
           </NormalHeading>
           <Text textColor="christmasRed" bold>
-          Esta é a thread onde o código JavaScript é executado <br />
-          Responsável por detectar mudanças no código React Native, como mudanças de estado, 
-          mudanças de componentes da UI, eventos de clique de botão, etc <br />
-          Após detectar qualquer alteração, ela empacota o pacote JavaScript e o entrega para a Ponte do React Native
+          Ao usar o mecanismo javascript, é responsável pelas execuções do pacote javascript.
           </Text>
         </Slide>
 
@@ -300,9 +297,7 @@ export default class Presentation extends React.Component {
           Native/UI Thread
           </NormalHeading>
           <Text textColor="christmasRed" bold>
-          Esta é a thread principal que executa o código nativo <br />
-          É a única thread que pode manipular as visualizações do host <br />
-          Ela é responsável por inicializar o aplicativo, renderizar a UI, gerenciar eventos de toque e invocar a thread JavaScript
+          Para lidar com tarefas como renderização de UI e eventos do usuário, é responsável por executar os módulos nativos.
           </Text>
         </Slide>
 
@@ -311,8 +306,7 @@ export default class Presentation extends React.Component {
           Layout Thread/Shadow Thread
           </NormalHeading>
           <Text textColor="christmasRed" bold>
-          Esta thread é usada pelo React Native para calcular o layout descrito no lado JavaScript e redirecionar esses detalhes para o lado nativo <br />
-          As visualizações são definidas em JavaScript, calculadas na Shadow Thread e redirecionadas para a UI thread
+          Antes de renderizar os elementos na tela do host, o layout dos elementos é calculado neste thread de fundo.
           </Text>
         </Slide>
 
@@ -376,12 +370,11 @@ export default class Presentation extends React.Component {
 
         <Slide bgColor="black">
           <NormalHeading textColor="christmasRed">
-          JSI (interface JavaScript)
+          JSI (JavaScript Interface)
           </NormalHeading>
           <Text textColor="christmasRed" bold>
-          JSI, abreviação de JavaScript Interface, é uma interface que permite a comunicação direta entre Javascript e Nativo. 
-          Ao contrário da ponte anterior, que envolvia múltiplas conversões entre JavaScript e tipos de dados nativos, o JSI permite interação direta. 
-          Isso resulta em transferências de dados e chamadas de métodos mais rápidas, contribuindo ainda mais para a melhoria geral do desempenho dos aplicativos React Native.
+          O JSI ou Javascript Interface é a camada que substituirá completamente o Bridge. 
+          O objetivo principal é tornar os lados Javascript e Nativo conscientes um do outro e capazes de se comunicarem sem a etapa extra que é a Ponte/Bridge.
           </Text>
         </Slide>
 
@@ -390,10 +383,9 @@ export default class Presentation extends React.Component {
           Fabric
           </NormalHeading>
           <Text textColor="christmasRed" bold>
-          Fabric é o UIManager que será responsável por renderizar a UI nos dispositivos. 
-          A diferença agora é que em vez de se comunicar com JavaScript através de uma ponte , 
-          o Fabric expõe suas funções via JavaScript para que o lado JS e o lado Nativo (vice-versa) 
-          possam se comunicar diretamente através de funções ref . passar dados entre os lados terá bom desempenho
+          A nova engine de renderização que promete melhorar significativamente o desempenho dos aplicativos. 
+          O Fabric otimiza a comunicação entre o JavaScript e o nativo, reduzindo a sobrecarga e melhorando a eficiência da renderização. 
+          Com essa inovação, o React Native avança para uma experiência de usuário ainda mais fluída e responsiva, aproximando-se do desempenho dos aplicativos nativos.
           </Text>
         </Slide>
 
@@ -418,6 +410,41 @@ export default class Presentation extends React.Component {
           Codegen é um mecanismo que gera informações de tipo estático para a ponte JavaScript para nativo. 
           Isso permite melhor verificação de tipo e preenchimento automático em seu IDE, tornando seu processo de desenvolvimento mais robusto e livre de erros.
            Ao detectar problemas relacionados ao tipo durante o desenvolvimento, o Codegen contribui para reduzir erros de tempo de execução e melhorar a estabilidade de seus aplicativos React Native.
+          </Text>
+        </Slide>
+
+        <Slide bgColor="black">
+          <NormalHeading textColor="christmasRed">
+          Benefícios da Nova Arquitetura - I
+          </NormalHeading>
+          <Text textColor="christmasRed" bold>
+          A Nova Arquitetura melhorou as coisas ao dizer adeus à velha Ponte e dar as boas-vindas a uma nova maneira de diferentes partes do aplicativo se comunicarem entre si. 
+          Eles introduziram o JavaScript Interface (JSI), que permite que JavaScript e C++ se entendam. 
+          Facilita que um objeto JavaScript mantenha uma referência a um C++ e vice-versa.
+          </Text>
+        </Slide>
+
+        <Slide bgColor="black">
+          <NormalHeading textColor="christmasRed">
+          Benefícios da Nova Arquitetura - II
+          </NormalHeading>
+          <Text textColor="christmasRed" bold>
+          - Agora é possível executar funções de forma síncrona que, em primeiro lugar, não deveriam ser assíncronas. <br />
+          - Antes, eles tinham que empacotar e desempacotar as informações cada vez que conversavam. Agora, eles podem simplesmente compartilhar informações sem passar por todos esses problemas, ou seja, a Nova Arquitetura não precisa mais serializar/desserializar os dados
+          </Text>
+        </Slide>
+
+        <Slide bgColor="black">
+          <NormalHeading textColor="christmasRed">
+          Benefícios da Nova Arquitetura - III
+          </NormalHeading>
+          <Text textColor="christmasRed" bold>
+          - Para transporte de dados, o JSI substituirá o Bridge. <br />
+          - Threads nativos e JavaScript podem se comunicar diretamente entre si. <br />
+          - Quando necessário, os Módulos Turbo podem ser carregados. <br />
+          - Renderização suave <br />
+          - Verificação de tipo estático para garantir compatibilidade entre Native e JS. <br />
+          - Tarefas urgentes podem ser realizadas de forma síncrona.
           </Text>
         </Slide>
 
